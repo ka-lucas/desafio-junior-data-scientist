@@ -6,7 +6,7 @@
 
 --#2.Qual o tipo de chamado que teve mais teve chamados abertos no dia 01/04/2023?
 --Resposta: 
-    --O tipo de chamado com mais incidencia
+    --O tipo de chamado com mais incidencia é estacionamento irregular
 --Query utilizada:
     SELECT tipo, COUNT(*) as total_tipo_chamado FROM `datario.adm_central_atendimento_1746.chamado` 
     WHERE DATE(data_inicio) = '2023-04-01' 
