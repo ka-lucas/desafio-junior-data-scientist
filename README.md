@@ -1,25 +1,8 @@
-# Desafio Técnico - Cientista de Dados Júnior
+# Data Analysis Project
 
-## Descrição
-
-Bem-vindo ao desafio técnico para a vaga de Cientista de Dados Júnior no campo de soluções de tecnologia e de Governo Digital para área pública no Rio de Janeiro!
-
-### Objetivo
-
-O objetivo deste desafio é avaliar suas habilidades técnicas em manipulação de dados, análises exploratórias, integração com APIs, consulta SQL no Big Query, análise e visualização de dados.
-
-
-#### Observação
-
-É esperado que você possa não ter tido contato prévio com algumas das tecnologias solicitadas no desafio, e isso é intencional. Parte da avaliação consiste em verificar se você é capaz de aprender rapidamente e produzir resultados após estudar as tecnologias por algum tempo. Por essa razão, o desafio tem uma duração de 13 dias, permitindo que você tenha tempo para estudar e aprender antes de enviar suas respostas.
-
-### Conjunto de Dados
-
-Os conjuntos de dados que serão utilizados neste desafio são:
-
-- **Chamados do 1746:** Dados relacionados a chamados de serviços públicos na cidade do Rio de Janeiro. O caminho da tabela é : `datario.adm_central_atendimento_1746.chamado`
-- **Bairros do Rio de Janeiro:** Dados sobre os bairros da cidade do Rio de Janeiro - RJ. O caminho da tabela é: `datario.dados_mestres.bairro`
-- **Ocupação Hoteleira em Grandes Eventos no Rio**: Dados contendo o período de duração de alguns grandes eventos que ocorreram no Rio de Janeiro em 2022 e 2023 e a taxa de ocupação hoteleira da cidade nesses períodos. O caminho da tabela é: `datario.turismo_fluxo_visitantes.rede_hoteleira_ocupacao_eventos`
+Este repositório contém dois scripts Python independentes para análise de dados:
+1. **Análise de Chamados da Central 1746** - Análise dos chamados registrados na central de atendimento da prefeitura
+2. **Análise de Feriados e Clima** - Correlação entre feriados nacionais e dados climáticos
 
 ### Ferramentas e Recursos
 
@@ -29,39 +12,96 @@ Você precisará de acesso ao Google Cloud Platform (GCP) para utilizar o BigQue
 
 Todas as APIs utilizadas no desafio são públicas e possuem documentações com exemplos.
 
-### Perguntas do Desafio
+## Requisitos Gerais
 
-As perguntas do desafio estão detalhadas nos arquivos `perguntas_sql.md` e `perguntas_api.md`.
+Antes de executar qualquer um dos scripts, certifique-se de ter Python 3.7+ instalado em seu ambiente. Para instalar todas as dependências necessárias, execute:
 
-## Etapas
+```bash
+pip install -r requirements.txt
+```
 
-1. Siga o tutorial acima para criar sua conta no GCP e aprender como utilizar o BigQuery para consultar os dados.
-2. Faça um fork desse repositório.
-3. Utilize SQL para resolver todas as questões contidas no arquivo `perguntas_sql.md` no BigQuery. Salve suas respostas em um arquivo `analise_sql.sql`.
-4. Utilize Python e pandas para resolver todas as questões contidas no arquivo `perguntas_sql.md`. Salve suas respostas em um arquivo `analise_python.py` ou `analise_python.ipynb`. Para acessar os dados do BigQuery no python, siga o tutorial acima e utilize a biblioteca `basedosdados`.
-5. Utilize Python para resolver todas as questões contidas no arquivo `perguntas_api.md`. Salve suas respostas em um arquivo `analise_api.py` ou `analise_api.ipynb`.
-6. Utilize o LookerStudio, Power BI, StreamLit, Tableau ou qualquer outra ferramenta de visualização de sua preferência para criar visualizações informativas dos dados das tabelas e APIs. Suas visualizações não precisam se limitar apenas aos resultados das análises; é encorajado que você explore os dados e crie visualizações interessantes sobre eles.
-7. Faça commits incrementais à medida que trabalha no desafio e, finalmente, faça push do seu código para o seu repositório no GitHub. Seu repositório deve conter um README com todos os passos necessários para rodar seu código e ver a visualização de dados que você criou.
+## 1. Análise de Chamados da Central 1746
 
-## Avaliação
+### Descrição
+Este script analisa os dados de chamados registrados na central de atendimento 1746 da prefeitura do Rio de Janeiro, realizando consultas em bancos de dados públicos através da biblioteca BaseDOsDados.
 
-Você será avaliado em cada uma das categorias abaixo, com seus respectivos pesos:
+### Configuração
+Para executar este script, você precisará de acesso ao projeto DataRio no Google BigQuery:
 
-- **SQL**: peso 1
-- **Python**: peso 2
-- **Visualização de Dados**: peso 1
+1. Configure suas credenciais do Google Cloud Platform
+2. Verifique se o ID do projeto `datario-454017` está acessível para sua conta
 
-Uma média ponderada será calculada e os melhores candidatos serão chamados para a etapa de entrevistas. 
+### Como Executar
+Execute o script com o comando:
+# 1. Instalar dependências (se ainda não estiverem instaladas)
+```bash
+pip install requirements.txt
+```
+# 2. Execute o codigo referente a analise dos dados
 
-**Dica**: procure fazer algo diferente! Devido à grande quantia de candidatos, é possível que uma boa média não seja suficiente para te garantir uma entrevista. Tente se destacar!
+```bash
+python analise_python.py
+```
 
-## Dúvidas
+### Funcionalidades
+O script realiza as seguintes análises:
+- Volume de chamados em uma data específica (01/04/2023)
+- Tipos de chamados mais frequentes
+- Distribuição geográfica por bairros e subprefeituras
+- Análise de chamados de perturbação do sossego
+- Correlação entre chamados e eventos especiais da cidade (Carnaval, Réveillon, Rock in Rio)
 
-Se tiver alguma dúvida ou precisar de esclarecimentos adicionais sobre o desafio, entre em contato pelo email escritoriodedados@gmail.com.
+### Saída
+Os resultados são exibidos diretamente no console, incluindo um resumo ao final da execução.
 
-Boa sorte e estamos ansiosos para ver suas soluções! 
+## 2. Análise de Feriados e Clima
 
----
+### Descrição
+Este script analisa a relação entre feriados nacionais brasileiros e dados climáticos para o Rio de Janeiro em 2024, determinando quais feriados seriam mais "aproveitáveis" com base nas condições climáticas.
 
-**Prefeitura da Cidade do Rio de Janeiro**
+### Configuração
+Este script requer configuração de variáveis de ambiente para as APIs utilizadas:
 
+1. Certifique-se de que o arquivo `.env` foi importado para sua maquina caso não crie um com o conteudo:
+```
+API_HOLIDAY=https://date.nager.at/api/v3/PublicHolidays
+API_OPEN-METEO=https://archive-api.open-meteo.com/v1/archive
+```
+
+2. Certifique-se de que o arquivo `descriptions.json` esteja presente na mesma pasta do script. Este arquivo contém as descrições dos códigos climáticos.
+
+### Como Executar
+Execute o script com o comando:
+# 1. Instalar dependências (se ainda não estiverem instaladas)
+```bash
+pip install requirements.txt
+```
+# 2. Execute o codigo referente a analise dos dados
+
+```bash
+python analise_api.py
+```
+### Funcionalidades
+O script realiza as seguintes análises:
+- Contagem de feriados nacionais em 2024
+- Identificação do mês com maior número de feriados
+- Contagem de feriados que caem em dias úteis
+- Temperatura média mensal para o Rio de Janeiro
+- Condições climáticas predominantes por mês
+- Análise de temperatura e clima em cada feriado
+- Identificação de feriados "não aproveitáveis" (temperatura baixa ou clima ruim)
+- Identificação do feriado mais "aproveitável" (melhor combinação de temperatura e clima)
+
+### Saída
+Os resultados são exibidos diretamente no console, com separadores claros entre cada análise.
+
+## Observações
+- Ambos os scripts são independentes e podem ser executados separadamente
+- O primeiro script requer acesso ao Google BigQuery
+- O segundo script requer as APIs externas configuradas no arquivo `.env`
+- Para questões ou problemas, abra uma issue neste repositório
+
+### Visualização de Dados
+Uma visualização interativa dos resultados da análise está disponível no Looker Studio:
+[Dashboard de Análise dos Chamados 1746](https://lookerstudio.google.com/s/jQW8tqM2tCQ)
+![alt text](image.png)
